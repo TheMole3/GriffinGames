@@ -1,0 +1,11 @@
+{
+    "port": 80,
+    "clientSecret": "Azure Client Secret",
+
+    "authSecret": "Auth JWT Secret",
+    "redirectUri": "Auth redirect uri",
+    "cookieDomain": "Cookie Domain",
+
+    "dbConnect": "Mongo DB connect uri"
+}
+

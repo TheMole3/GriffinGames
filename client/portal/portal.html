@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Griffin Games Portal</title>
+	<link rel="stylesheet" href="/client/portal/portal.css">
+</head>
+<body>
+	<div id="Portal">
+		<span id="Griffin_Games" class="noselect text">Griffin Games</span>
+		<span id="Du_ska_mrda" class="noselect text">Du ska mörda</span>
+
+		<div id="hidden">
+			<div id="hit" class="noselect text">
+				<span><%= hit.name %></span>&emsp;&emsp;<span><%= hit.class %></span>
+			</div>
+			<img id="eye" src="/client/portal/n_49110.png">
+		</div>
+
+		<div id="Report">
+			<label class="text label" for="nextHitName">Namn</label>
+			<input name="Name" id="nextHitName" class="text nextHit" placeholder="Nästa offer">
+			<div class="line"></div>
+			<label class="text label" for="Class">Klass</label>
+			<input name="Class" id="nextHitClass" class="text nextHit" placeholder="" required pattern="((EE(19|20|21))|(IN21)|(INDRI(19|20))|(INPRK(19|20))|(INSVE(19|20))|(TE21(a|b|c|d))|(TEKDES(19|20))|(TEKPRO(19|20))|(TEKV3D(19|20))|(TEKVET(19|20))|(VO(19|20|21))|(Personal))">
+			<div class="line"></div>
+			<button id="rapportera" class="text">Rapportera</button>
+		</div>
+	</div>
+</body>
+</html>

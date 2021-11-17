@@ -1,0 +1,162 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    transition: 0.3s;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.text {
+    filter: drop-shadow(10px 20px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Rockwell;
+    font-style: italic;
+    font-weight: normal;
+    color: rgba(199,199,199,1);
+}
+
+#Portal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(74,72,72,1);
+    overflow: hidden;
+}
+
+#Griffin_Games {
+    left: 3vw;
+    top: 3vh;
+
+    font-family: Rage;
+    font-size: 15vmin;
+    color: rgba(255,255,255,1);
+}
+
+#Du_ska_mrda {
+    font-size: 4vmin;
+    left: 4vw;
+    top: 30vh;
+}
+
+#hidden {
+    position: absolute;
+    left: calc(4vw - 30px);
+    top: 36vh;
+    display: flex;
+
+    align-items: center;
+
+    cursor: pointer;
+}
+
+#hit {
+    position: relative;
+    font-size: 4vmin;
+
+    text-shadow: 0 0 22px white;
+    color: transparent;
+
+    background-color: rgba(143, 143, 143, 0.3);
+    border-radius: 20px;
+    padding: 30px
+}
+
+#hidden:hover #hit, #hidden:active #hit {
+    background-color: rgba(143, 143, 143, 0);
+    color: rgba(255,255,255,1);
+    text-shadow: none;
+}
+
+#eye {
+    width: 25%;
+    padding-left: 20px;
+    opacity: 80%;
+}
+
+#hidden:hover #eye {
+    opacity: 0;
+}
+
+
+
+#Report {
+    position: absolute;
+    left: 4vw;
+    top: 70vh;
+}
+
+.nextHit {
+    position: relative;
+    background-color: transparent;
+    font-size: 4vmin;
+    left: 5px;
+    width: calc(20vw - 10px);
+    margin-right: 4vw;
+    font-style: normal;
+
+    background-color: none;
+}
+
+.nextHit:focus {
+    box-shadow: none;
+    outline: none !important;
+    outline-width: 0;
+}
+
+
+.line {
+    position: absolute;
+    height: 2px;
+    background-color: rgba(199,199,199,0.5);
+    width: 20vw;
+    bottom: -5px;
+    border-radius: 1px;
+}
+
+#nextHitClass.invalid ~ .line {
+    background-color: rgba(194, 63, 63, 0.5);
+}
+
+.line:nth-of-type(2) {
+    left: calc(24vw - 10px)
+}
+
+.label {
+    bottom: -4vh;
+    font-size: 2vmin;
+    filter: none;
+    color: rgba(199,199,199,0.5);
+}
+
+#rapportera {
+    right: 4vw;
+    top: 12vh;
+    font-size: 3vmin;
+    padding: 3vmin;
+    background-color: rgb(102, 102, 102);
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.161));
+    border-radius: 15px;
+}
+
+#rapportera:hover {
+    background-color: rgb(88, 88, 88);
+    cursor: pointer;
+}
+
+#rapportera:active {
+    transform: translateY(2px);
+}

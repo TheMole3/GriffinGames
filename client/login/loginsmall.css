@@ -1,0 +1,32 @@
+#Griffin_Games {
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    font-size: 15vmin;
+}
+
+#Rapportering {
+    top: 30vmin;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    font-size: 10vmin;
+}
+
+#Det_r_400_personer_kvar {
+    top: 50vh;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    font-size: 7vmin;
+}
+
+.Logga_in_rect {
+    width: 80vw;
+    height: 24vmin;
+    left: 10vw;
+    top: 70vh;
+
+    font-size: 10vmin;
+    line-height: 24vmin;
+}
