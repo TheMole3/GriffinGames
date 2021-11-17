@@ -23,7 +23,7 @@ var jwt = {
         return jsonwebtoken.sign(id, config.authSecret);
     },
     setSessionCookie: async (context, id) => {
-        await context.res.cookie('authToken', jwt.generateAccessToken(id), {maxAge: 1000*60*60*24, httpOnly: true, domain: "play.melo.se", path: "/"})
+        await context.res.cookie('authToken', jwt.generateAccessToken(id), {maxAge: 1000*60*60*24, httpOnly: true, domain: config.cookieDomain, path: "/"})
     }
 }
 
