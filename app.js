@@ -8,6 +8,8 @@ const config = require("./config.json")
     , https = require('http');
 
 
+const griffin = require("./griffin.js")
+
 // Express init
 const auth = require("./auth/auth"); // Import auth code
 
@@ -25,16 +27,28 @@ app.get('/', (req, res) => { // Main endpoint, Login page
     });
 });
 
-app.get('/portal', (req, res) => { // Portal page, where the contestants report their killings
+app.get('/portal', async (req, res) => { // Portal page, where the contestants report their killings
     if(!req.user) return res.redirect("/") // If user is not logged in redriect to start page
+
+    var player = await griffin.getPlayer(req.user.email)
+    var target = await griffin.getPlayer(player.target)
+    if(!player) return res.send("Du är inte registrerad som spelare")
+    if(!target) target = {name: "Du har ingen som du ska ta"}
+
     ejs.renderFile(__dirname + "/client/portal/portal.html", { // Render page
-        hit: {
-            name: req.user.displayName, // Person to kill
-            class: "TEKV3D20" // Class of the person to kill
+        target: {
+            name: target.name, // Person to kill
+            class: target.class // Class of the person to kill
         }
     }, function(err, str){
         res.send(str)
     })
+})
+
+app.get('/report', async (req, res) => {
+    if(!req.user) return res.sendStatus(403) // If user is not logged in return error
+    let success = await griffin.reportHit(req.user.email, req.query['name'], req.query['class']) // Reported target
+    res.send(success)
 })
 
 app.get('/login', (req, res) => { // Microsoft Azure login endpoint
@@ -60,9 +74,9 @@ app.get('/redirect', (req, res) => { // Microsoft Azure Auth redirect endpoint
 
 // Start server
 var httpsServer = https.createServer({
-    ca: fs.readFileSync("ca_bundle.crt"),
+/*    ca: fs.readFileSync("ca_bundle.crt"),
     cert: fs.readFileSync("certificate.crt"),
-    key: fs.readFileSync("private.key")
+    key: fs.readFileSync("private.key")*/
 }, app);
 
 httpsServer.listen(config.port, () => {
