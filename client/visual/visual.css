@@ -99,8 +99,8 @@ body {
     justify-content: center;
 
     width: 100%;
-    top: calc(10.5vh - 5em);
-    height: 10em;
+    top: calc(10.5vh - 4em);
+    height: 8em;
     overflow: hidden;
 
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.161));
@@ -116,7 +116,7 @@ body {
 .digits {
     float:left;
     list-style-type: none;
-    font-size: 10em;
+    font-size: 8em;
     line-height: 2em;
     margin: 0 0.2vw 0 0.2vw
 }

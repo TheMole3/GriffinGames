@@ -114,3 +114,14 @@ span {
 .Logga_in_rect:hover {
     background-color: rgb(110, 110, 110);
 }
+
+#GDPR {
+    position: absolute;
+    color: rgb(124, 124, 124);
+
+    bottom: 0
+}
+
+#GDPR a {
+    color: rgb(124, 124, 124);
+}
