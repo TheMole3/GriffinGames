@@ -17,30 +17,141 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+body {
+    background-color: rgba(74,72,72,1);
+}
+
 .text {
-    filter: drop-shadow(10px 20px 5px rgba(0, 0, 0, 0.161));
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.161));
     overflow: visible;
     font-family: Rockwell;
     font-style: normal;
     font-weight: normal;
     color: rgba(199,199,199,1);
-    font-size: 1.2vw;
-}
-
-#container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(74,72,72,1);
-    overflow: hidden;
-    column-width: 200px;
-    padding: 3vmin;
+    font-size: 2vmin;
     text-align: center;
+    white-space: nowrap;
 }
 
-.exclusion {
-    position: absolute;
-    height: calc(1.41vw * 32);
-    width: 20vw;
-    background-color: red;
+.dead {
+    text-decoration: line-through ;
+    color: rgb(102, 102, 102);
+}
+
+.container {
+    margin: 5vh;
+    height: 90vh;
+    width: calc(100vw - 10vh);
+}
+
+.container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "Col1 Col2 Col3 Col4 Col6 Col8 Col10 Col11 Col12"
+      "Col1 Col2 Col3 Alive Alive Alive Col10 Col11 Col12"
+      "Col1 Col2 Col3 Col5 Col7 Col9 Col10 Col11 Col12"; 
+  }
+  .Alive { grid-area: Alive; }
+  .Col1 { grid-area: Col1; }
+  .Col2 { grid-area: Col2; }
+  .Col3 { grid-area: Col3; }
+  .Col4 { grid-area: Col4; }
+  .Col5 { grid-area: Col5; }
+  .Col6 { grid-area: Col6; }
+  .Col7 { grid-area: Col7; }
+  .Col8 { grid-area: Col8; }
+  .Col9 { grid-area: Col9; }
+  .Col10 { grid-area: Col10; }
+  .Col11 { grid-area: Col11; }
+  .Col12 { grid-area: Col12; }
+
+
+
+
+  #alive {
+    position: relative;
+    height: 21vh;
+    width: 25vw;
+    background-color: rgb(102, 102, 102);
+    filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.161));
+    border-radius: 15px;
+    text-align: center;
+    shape-outside: circle(50%);
+    
+    top: 4.5vh;
+    left: 3.2vw;
+
+    overflow: hidden;
+}
+
+#alive span {
+    line-height: 21vh;
+    font-size: 18vmin;
+}
+
+#counter {
+    position: relative;
+    display: flex;
+
+    justify-content: center;
+
+    width: 100%;
+    top: calc(10.5vh - 5em);
+    height: 10em;
+    overflow: hidden;
+
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.161));
+    font-family: Rockwell;
+    font-style: normal;
+    font-weight: normal;
+    color: rgba(199,199,199,1);
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+.digits {
+    float:left;
+    list-style-type: none;
+    font-size: 10em;
+    line-height: 2em;
+    margin: 0 0.2vw 0 0.2vw
+}
+
+.digits-zero {
+    margin-top: calc(-2em * 0 - 0.5em); /* number 0! */
+}
+.digits-one {
+    margin-top: calc(-2em * 1 - 0.5em); /* number 1! */
+}
+.digits-two {
+    margin-top: calc(-2em * 2 - 0.5em); /* number 2! */
+}
+.digits-three {
+    margin-top: calc(-2em * 3 - 0.5em); /* number 3! */
+}
+.digits-four {
+    margin-top: calc(-2em * 4 - 0.5em); /* number 4! */
+}
+.digits-five {
+    margin-top: calc(-2em * 5 - 0.5em); /* number 5! */
+}
+.digits-six {
+    margin-top: calc(-2em * 6 - 0.5em); /* number 6! */
+}
+.digits-seven {
+    margin-top: calc(-2em * 7 - 0.5em); /* number 7! */
+}
+.digits-eight {
+    margin-top: calc(-2em * 8 - 0.5em); /* number 8! */
+}
+.digits-nine {
+    margin-top: calc(-2em * 9 - 0.5em); /* number 9! */
+}
+
+.digits {
+    transition: 3s;
 }

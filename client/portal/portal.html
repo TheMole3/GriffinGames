@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Griffin Games Portal</title>
 	<link rel="stylesheet" href="/client/portal/portal.css">
+	<link rel="stylesheet" media="screen and (max-width: 1400px)" href="/client/portal/portalSmall.css">
 </head>
 <body>
 	<div id="Portal">
@@ -20,13 +21,27 @@
 		</div>
 
 		<div id="Report">
-			<label class="text label" for="nextHitName">Namn</label>
+			<label class="text label noselect" for="nextHitName">Namn</label>
 			<input name="Name" id="nextHitName" class="text nextHit" placeholder="Nästa offer">
 			<div class="line"></div>
-			<label class="text label" for="Class">Klass</label>
+			<label class="text label noselect" for="Class">Klass</label>
 			<input name="Class" id="nextHitClass" class="text nextHit" placeholder="" required pattern="((EE(19|20|21))|(IN21)|(INDRI(19|20))|(INPRK(19|20))|(INSVE(19|20))|(TE21(a|b|c|d))|(TEKDES(19|20))|(TEKPRO(19|20))|(TEKV3D(19|20))|(TEKVET(19|20))|(VO(19|20|21))|(Personal))">
 			<div class="line"></div>
 			<button id="rapportera" class="text">Rapportera</button>
+		</div>
+
+		<div id="info" class="text noselect">
+			<span>Detta är griffin games<br>
+			portalen.<br>
+			<br>
+			Här kan du rapportera<br>
+			dina tagningar.<br>
+			<br>
+			Fyll i det namn den du<br>
+			tog hade på sin<br>
+			pinne i rutan, "Nästa offer",<br>
+			och tryck sedan<br>
+			Rapportera.</span>
 		</div>
 	</div>
 </body>

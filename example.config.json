@@ -1,6 +1,10 @@
 {
     "port": 80,
-    "clientSecret": "Azure Client Secret",
+    "azure": {
+        "clientId": "Azure client ID",
+        "authority": "Azure client authority",
+        "clientSecret": "Azure client secret"
+    },
 
     "authSecret": "Auth JWT Secret",
     "redirectUri": "Auth redirect uri",

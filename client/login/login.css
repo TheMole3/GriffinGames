@@ -46,41 +46,45 @@ span {
     right: 5vw;
 }
 
-@media screen and (max-width: 1659px) {
+@media screen and (max-width: 1400px) {
     #Griffin {
         opacity: 0;
         visibility: hidden;
     }
 }
 
-#Griffin_Games {
+.text {
     filter: drop-shadow(10px 20px 5px rgba(0, 0, 0, 0.161));
-    left: 93px;
-    top: 43px;
     position: absolute;
     overflow: visible;
-    width: 987px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Rage;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 200px;
-    color: rgba(255,255,255,1);
-}
-#Rapportering {
-    left: 93px;
-    top: 294px;
-    position: absolute;
-    overflow: visible;
-    width: 740px;
     white-space: nowrap;
     text-align: left;
     font-family: Rockwell;
-    font-style: normal;
+    font-style: italic;
     font-weight: normal;
-    font-size: 120px;
     color: rgba(199,199,199,1);
+}
+
+#Griffin_Games {
+    left: 3vw;
+    top: 3vh;
+
+    font-family: Rage;
+    font-size: 19vmin;
+    color: rgba(255,255,255,1);
+}
+
+#Rapportering {
+    left: 4vw;
+    top: 30vh;
+    font-size: 10vmin;
+    font-style: normal;
+}
+
+#left {
+    left: 4vw;
+    top: 43vh;
+    font-size: 5vmin;
 }
 
 .Logga_in_rect {
@@ -89,8 +93,8 @@ span {
     overflow: visible;
     width: 407px;
     height: 120px;
-    left: 510px;
-    top: 695px;
+    left: 25vw;
+    top: 65vh;
     cursor: pointer;   
     border-radius: 20px;
     white-space: nowrap;
@@ -109,19 +113,4 @@ span {
 
 .Logga_in_rect:hover {
     background-color: rgb(110, 110, 110);
-}
-
-#Det_r_400_personer_kvar {
-    left: 93px;
-    top: 482px;
-    position: absolute;
-    overflow: visible;
-    width: 574px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Rockwell;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 50px;
-    color: rgba(199,199,199,1);
 }
