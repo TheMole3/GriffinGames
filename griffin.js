@@ -1,7 +1,7 @@
 const config = require("./config.json")
 
 const mongojs = require('mongojs')
-    , db = mongojs(config.dbConnect, ['GriffinGames']) // Import database TheMole and collections bombman and referrals
+    , db = mongojs(config.dbConnect, ['GriffinGames']) // Import database
 
 var griffin = {
     alive: 0,

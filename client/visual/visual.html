@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/client/visual/visual.css">
 </head>
 <body>
-	<div class="container">
+	<div class="container noselect">
         <div class="Alive">
             <div id="alive">
                 <div id="counter">
@@ -32,27 +32,55 @@
         <div class="Col12 text Col"></div>
 	</div>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script>
-        var names = ["Alan Allen","Sherry Evans","Shannon Stevens","Tara Francis","Tara Lee","Shelby Raymond","Christopher Monroe","Michael Miller","Krystal Gibson","Brenda Riley","Trevor Patterson","Gregory Miller DDS","Sarah Ferguson","Mrs. Rachael Cruz","Amy Cordova","Linda Lynch","Craig Aguilar","Alan Adams","Karen Stein","April Williams","Cathy Powers","Natalie King","Mrs. Erica Gray","Luis Allen","Erica Chambers","Bryan Thompson","Deborah Davis","Terry Ponce","Nicholas Price","Mark Schultz","Frank Hanson","Christina Olsen","Jennifer Cross","Megan Cochran","Terry Lee","Stuart Schultz","Jennifer Knight","Kelly Lopez","Nicholas Phillips","Lucas Hamilton","Cindy Gibson","Cesar Yates","Daniel Jackson","Justin Wright","Wesley Norris","Jeffrey Clark","Joshua Allen","Jessica Becker","Jennifer Wiggins","Mark Gamble","Lori Tran","William Blankenship","Jamie Perez","Kyle Johnson","William Bentley","Gary Fisher","Lindsey Clark","Karen Nguyen","Todd Carlson","Karen Thomas","Crystal Hamilton","Mark Dorsey","Blake Baker","Mathew Banks","Michelle Wilson","Joshua Rangel","John Green","Jessica Smith","Robin Soto","Caroline Cummings","Deborah Lee","David Reynolds","Leah Flores","Alec Nelson","Jennifer Waller","Jonathan Sanchez","Sarah Benitez","Nancy Clark","Terri Wise","Angela Ramirez","Melissa Charles","Virginia Mueller","Patricia Sanchez","Joseph Hammond","Jordan Murphy","Nicholas Buckley","Debra Peterson","Michelle Williams","Ashley Johnson","Luis Stevens MD","Steven Arias","Fernando Kim","Toni Gamble","Debra Williams","Megan Perez","Madeline Hall","Linda Grimes","Nicole Reed","Rebecca Morton","Andrew Ramos","Cody Richardson","Mark Charles","Robert Rodriguez","Sheila Wolfe","Edward Rodriguez","Leah Chaney","Marvin Johnson","Patricia Parrish","Michael Flores","Jason Wise","Amy Hanson","Juan Cook","Stephen Scott","Scott Shaw","Calvin Kelley","Adam Wang","Johnny Wilkinson","Shannon Spears","Amanda Foster","Brian Smith DVM","David Wright","Michael Long MD","Jodi Melton","Christina Smith","Rebecca Lam","John Kirby","Mark Tucker","Jamie Dean","Desiree Colon","Elaine Castillo","Dr. Susan Winters","Yolanda Richards","Allison Higgins","Michael Carr","Nancy Moore","Christine Saunders","Jasmine Walker","Benjamin Bonilla","Brian Hamilton","Keith Wiley","Perry Wilson","Patricia Bond","Dr. Lori Reed","Paul Villegas DVM","Vicki Fletcher","Melinda Marshall","Kristin Williams","Kristina Thompson","Jennifer Parker","Scott Taylor","Michelle Shelton","Jennifer Lewis","Ryan Walker","Tyler Reed","Gwendolyn Peterson","Paula Hamilton","Lorraine Mendez","Ana Sims","Brittany Evans","Stephanie Galvan","Jessica Young","Jessica Mack","John Adams","Donald Dixon","Jessica Price","John Clarke","Kimberly Humphrey","Carly Jimenez","John Reeves","Angel Johnson","Amanda Mays","Robert Mckenzie","Robert Miller","Heidi Romero","Jane Christian","Jordan Ball","Jillian Jones","Katherine Harrington","Lori Wilson","Alicia Fitzgerald","Angela Allen","Michael Thompson","Dawn Murillo DVM","Angela Brennan","Todd Young","Scott Adams","Lauren Baldwin","Joseph Rodriguez","Ashley Stephens","Paula White","Gary Welch","Stephanie Wallace","Marc Meyer","Allen Copeland","Bobby Mercado","Terry Coleman","Antonio Riddle","Jamie Smith","Joseph Porter","Diane Navarro","Daniel Curtis","Whitney Moore","Ashley Baker","Monica Bass","Jessica Thompson","Kelly Ramirez MD","Michele Salazar","Mark Williams","Amy Carpenter","Christopher Hernandez","Sarah Keller","Rebecca Dawson","Jonathan Henderson","Michael Liu","Michelle Turner","Andrew Berger","Jacob Morgan","Melissa Frank","Scott Cortez","John Fuentes","Sheri Reed","Brent Snyder","David Jones","James Perry","David Johnson","Kayla Hudson","Michael Landry","Steven Velasquez","Susan Moore","Clayton Garcia","Sarah Lawrence","Tracy Gonzalez","Colin Downs","Sandra Hudson","Joseph Bell","Jeremy James DDS","Jeffrey Lawson","Michael Mcmillan","Tina Moon","Joe Hall","Dr. Joann Hood","Frank Davis","Kim Mccarty","Alejandro Mayer","Sandra Bailey","Mike Parsons","Russell West","Laura Jones","Susan Nguyen","Anthony Garcia","Denise Bell","Maria Sanchez","Andre Watson","Tanya Lee","Kathy Cox","Brian Bell","Robert Taylor","Jonathan Johnson","Julie Lewis","Raymond Flores","Eugene Jordan","Michael Briggs DDS","Michael Houston","Kelly Pratt","Michael Ramirez","Larry Nelson","Lauren Shaw","Jessica Lee","Joseph Nguyen","Alexis Howard","Alicia Robertson","Marcia Brown","Edward Hall","Gregory Young","Rebecca Carter","Lori Swanson","Crystal Perkins","Kyle Jackson","Christopher Oconnor","Mark Tran","Hunter Fitzgerald","Jeffrey Wallace","Karen Schwartz","Cassandra Hawkins","John Johnson","Christopher Adams","Victor Johnson","Kimberly Hansen","Todd Hicks","Kevin Estrada","Maria Larson","Allison Harris","Amber Reyes","Kevin Torres","Matthew Collins","Elizabeth Wood","Logan Massey","Aaron Warren","Megan Gonzales","Lauren Quinn"]
-        var alive = 0
+        let socket = io.connect()
 
-        var inCol = Math.ceil(names.length/24)
+        oldNames = []
 
-        var columnCount = [3,3,3,1,1,1,1,1,1,3,3,3]
-        var pos = 0
-        for(let i = 1; i <= 12; i++) { // For each column
-            var spacing = ((90/3)/inCol)
-            if(i == 12) spacing = 90/(names.length-pos)
+        socket.on("update", (data) => {
+            updateNames(data)
+        })
 
-            document.getElementsByClassName("Col"+i)[0].style["line-height"] = spacing + "vh"
+        function updateNames(names) {
+            if(oldNames.length==0) setNewNames(names)
+            oldNames = names
 
-            for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
-                if(Math.random() < Math.random()) {document.getElementsByClassName("Col" + i)[0].innerHTML += "<span>" + names[pos] + "</span><br>"; alive++}
-                else document.getElementsByClassName("Col"+ i)[0].innerHTML += '<span class="dead">' + names[pos] + "</span><br>"
+            alive = 0
+            for (let index = 0; index < names.length; index++) {
+                const element = names[index];
+                if(!element.alive) document.getElementsByName(element.id)[0].className = "dead"
+                else document.getElementsByName(element.id)[0].className = "", alive++
             }
-        } 
 
-        setAlive(alive)
+            setAlive(alive)
+        }
+
+        function setNewNames(names) {
+            [...document.getElementsByClassName("Col")].forEach(element => {
+                element.innerHTML = ""
+            });
+            
+            let alive = 0
+
+            var inCol = Math.ceil(names.length/24)
+
+            var columnCount = [3,3,3,1,1,1,1,1,1,3,3,3]
+            var pos = 0
+            for(let i = 1; i <= 12; i++) { // For each column
+                var spacing = ((90/3)/inCol)
+                if(i == 12) spacing = 90/(names.length-pos)
+
+                document.getElementsByClassName("Col"+i)[0].style["line-height"] = spacing + "vh"
+
+                for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
+                    if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos].id}">` + names[pos].name + "</span><br>"; alive++}
+                    else document.getElementsByClassName("Col"+ i)[0].innerHTML += `<span class="dead" name="${names[pos].id}">` + names[pos].name + "</span><br>"
+                }
+
+                setAlive(alive)
+            } 
+        }
 
         function setAlive(num) {
             let digits = document.getElementsByClassName("digits");

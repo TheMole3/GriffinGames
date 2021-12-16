@@ -19,9 +19,10 @@ app.use(auth.jwt.authenticateToken) // Use middleware for auth token
 app.use('/client', express.static('client')); // Serve static /client
 
 // Web endpoints
-app.get('/', (req, res) => { // Main endpoint, Login page
+app.get('/', async (req, res) => { // Main endpoint, Login page
+    await griffin.calculatePlayers()
     ejs.renderFile(__dirname + '/client/login/login.html', { // Render login page with number of contestants left
-        left: Math.floor(Math.random()*400) // Number of contestants left
+        left: griffin.alive // Number of contestants left
       }, function(err, str){
         res.send(str)
     });
@@ -82,3 +83,7 @@ var httpsServer = https.createServer({
 httpsServer.listen(config.port, () => {
     console.log('HTTPS Server running on port' + config.port);
 });
+
+const io = require('socket.io')(httpsServer);
+
+let visualServer = require("./visual.js")(app, io)

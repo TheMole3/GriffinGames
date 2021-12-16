@@ -21,6 +21,16 @@ body {
     background-color: rgba(74,72,72,1);
 }
 
+#GriffinGames {
+    position: absolute;
+    left: 3vw;
+    top: 3vh;
+
+    font-family: Rage;
+    font-size: 15vmin;
+    color: rgba(255,255,255,0.5);
+}
+
 .text {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.161));
     overflow: visible;
@@ -68,7 +78,9 @@ body {
   .Col11 { grid-area: Col11; }
   .Col12 { grid-area: Col12; }
 
-
+.Col {
+    width: calc(100vw/10)
+}
 
 
   #alive {
