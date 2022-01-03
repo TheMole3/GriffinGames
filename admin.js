@@ -4,7 +4,7 @@ const mongojs = require('mongojs')
     , db = mongojs(config.dbConnect, ["users", 'GriffinGames']) // Import database users and GriffinGames
 
 
-let adminServer = (express, app) => {
+let adminServer = (express, app, griffin) => {
     ensureAdminAuth = (req, res, next) => {
         if(!config.administratorEmails.includes(req.user.email)) return res.send(403); 
         next();
@@ -24,10 +24,18 @@ let adminServer = (express, app) => {
         })
     })
 
-    app.get('/adminApi/getPlayer', ensureAdminAuth, (req, res) => {
-        db.GriffinGames.find({email: req.query.email}, (error, docs) => {
-            res.send(docs)
-        })
+    app.get('/adminApi/getPlayer', ensureAdminAuth, async (req, res) => { // Get a players info, ?email=user@domain.com
+        let player = await griffin.getPlayer(req.query.email);
+        res.send(player);
+    })
+
+    app.get('/adminApi/killPlayer', ensureAdminAuth, async (req, res) => { // Kill a player, also changes the target, ?email=user@domain.com&push=true
+        let player = await griffin.getPlayer(req.query.email);
+        let eliminator = await griffin.getPlayerByTarget(req.query.email);
+        griffin.killPlayer(player.email); // Kill the player
+        if(String(req.query.push) == "true") griffin.setNewTarget(eliminator.email, player.target); // Set the new target for the eliminator
+        else griffin.setNewTargetNoPush(eliminator.email, player.target); // Set the new target for the eliminator and dont push it to prevTargets
+        res.send(200)
     })
 
     app.post("/adminApi/newPlayers", ensureAdminAuth, (req, res) => { // Lägg till nya spelare, tar bort gammla spelare
@@ -63,13 +71,15 @@ let adminServer = (express, app) => {
                 target: target.email,
                 prevTargets: [],
                 alive: true,
+                deathTime: null,
+                placement: null,
+                log: [],
             })
         }
         db.GriffinGames.remove()
         db.GriffinGames.insert(database)
-        console.log(database)
 
-        res.sendStatus(200)
+        res.send(200);
     });
         
     app.use('/admin', [ensureAdminAuth, express.static(__dirname + '/admin')]);

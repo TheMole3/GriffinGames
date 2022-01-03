@@ -90,10 +90,10 @@ var httpsServer = https.createServer({
 }, app);
 
 httpsServer.listen(config.port, () => {
-    console.log('HTTPS Server running on port' + config.port);
+    console.log('HTTPS Server running on port ' + config.port);
 });
 
 const io = require('socket.io')(httpsServer);
 
 let visualServer = require("./visual.js")(app, io)
-let adminServer = require("./admin.js")(express, app)
+let adminServer = require("./admin.js")(express, app, griffin)

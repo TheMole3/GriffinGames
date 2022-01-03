@@ -1,12 +1,7 @@
 ## Kvar i admin panelen
-Att kunna döda en person
-Då ska man kunna välja om den ska få en placering eller inte
 Uppdatera dynamiskt med databasen, eller åtminstonde visa att det finns uppdaterad data tillgänglig.
-Kanske visa antal mord som en spalt
+
 Kolla skärm kompatabilitet med skoldatorn
-
-Visa loggningar av rapporteringar
-
 
 
 ## Att göra i portalen
@@ -17,10 +12,9 @@ Visning i admin panelen.
 Vad händer om du säger att du är död men den som dödar dig inte säger något?
 När sätts placeringen? När du säger att du är död eller när den som dödade dig säger till? Lutar nog mot när du själv säger att du är död
 
-Logga rapporteringar, tid och vem
+Visa att du är död bättre
 
 RESPONSIVE!!! Det måste den vara
-
 
 
 ## Visual
@@ -34,6 +28,7 @@ När du ska döda dig själv, och därmed är vinnare, ska den automatisk känna
 Fixa att påminnelse när det bara är några st kvar, räkna ner från 10 kanske...
 Pushbullet? Eller dyl.
 
+SQL injections
 
 
 ## Övrigt
@@ -45,4 +40,4 @@ Skapa också en guide för hur allt funkar, uppsättning osv. Tanken är att det
 
 
 
-Snygg jobbat! Jobba på 2022-01-03
+Snygg jobbat! Jobba på, 2022-01-03

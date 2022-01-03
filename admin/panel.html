@@ -27,7 +27,7 @@
         table.sortable tbody tr:nth-child(2n+1) td {
             background: #ccffff;
         }
-        .col {
+        .clickableCell {
             cursor: pointer;
         }
 
@@ -62,7 +62,7 @@
             left: 10px;
             font-size: 15pt;
         }
-        #logg {
+        #log {
             position: relative;
             top: 150px;
             left: 10px;
@@ -80,7 +80,7 @@
     <div id="excel_table"></div>
     <div id="selected_user">
         <div id="actions">
-            <button>Döda</button>
+            <button id="killButton" onclick="kill()" data-email="">Döda</button>
         </div>
         <table id="sel_user_table">
             <tr>
@@ -128,7 +128,7 @@
             </thead>
             <tbody \>
         </table>
-        <table id="logg">
+        <table id="log">
             <caption>Logging av rapporteringar</caption>
             <thead>
                 <tr>
@@ -145,14 +145,12 @@
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        function parseDate(time) {
-
-        }
-
-        $.get("/adminApi/data").then((data) => {
+        // Load list of players
+        $.get("/adminApi/data").then((data) => { // Get the whole database
             var table = $(`
             <table class="sortable">
                 <tr>
+                    <th>Elimineringar</th>
                     <th>Namn</th>
                     <th>Klass</th>
                     <th>Epost</th>
@@ -162,29 +160,28 @@
                     <th>Placement</th>
                 </tr>
             </table
-            `);
+            `); // The colum headers and the table
 
-            for(var y in data) {
-                let player = data [y]
-                var row = $('<tr />');
-                for(var x in player) {
-                    if(x == "_id" || x == "prevTargets" ) continue; //Do not display ID nor prevTargets
-                    if(x == "deathTime") row.append(`<td class="col" data-email="${player.email}">${new Date(player[x]).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" })}</td>`);
-                    else row.append(`<td class="col" style="background-color: ${(x == "alive"?(player[x]==false?"red":"darkgreen"):"")}" data-email="${(x=="target"?player.target:player.email)}">${player[x]}</td>`);
+            for(var y in data) { // Loop thru data from the database
+                let player = data[y] // A player object
+                var row = $('<tr />'); // Create a table row
+                row.append(`<td class="clickableCell">${player.prevTargets.length}</td>`)
+
+                for(var x in player) { // Loop thru parameters of the player to add them to the right cells
+                    if(x == "_id" || x == "prevTargets" || x == "log" ) continue; //Do not display ID nor prevTargets nor logs
+                    if(x == "deathTime") row.append(`<td class="clickableCell" data-email="${player.email}">${player[x]?new Date(player[x]).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" }):""}</td>`);
+                    else row.append(`<td class="clickableCell" style="background-color: ${(x == "alive"?(player[x]==false?"red":"darkgreen"):"")}" data-email="${(x=="target"?player.target:player.email)}">${player[x]!=null?player[x]:""}</td>`);
                 }
-                table.append(row);
+                table.append(row); // Append the row to the table
             }
 
             // Insert into DOM
             $('#excel_table').html(table);
-            sorttable.makeSortable($(".sortable")[0]);
+            sorttable.makeSortable($(".sortable")[0]); // Make the table sortable by clicking headers
         })
 
-        function selPlayer(email) {
-            $.get("/adminApi/getPlayer?email=" + email).then((docs) => {
-                player = docs[0]
-                console.log(player)
-
+        function selPlayer(email) { // Show a player in the inspect window
+            $.get("/adminApi/getPlayer?email=" + email).then((player) => { // Get the player from the database
                 // Show user data
                 $("#selUserName").text(player.name)
                 $("#selUserClass").text(player.class)
@@ -192,15 +189,16 @@
                 $("#selUserAlive").text(player.alive?"Levande":player.deathTime)
                 $("#selUserPlace").text(player.alive?"null":player.placement)
 
+                $("#killButton").data("email", player.email)
+
                 // Show current target
-                $.get("/adminApi/getPlayer?email=" + player.target).then((docs) => {
-                    target = docs[0];
+                $.get("/adminApi/getPlayer?email=" + player.target).then((target) => {
                     $("#currentTarget tbody").empty()
                     var row = $('<tr />');
                     row.append(`                    
                     <td>${target.name}</td>
                     <td>${target.class}</td>
-                    <td class="col" data-email="${target.email}" >${target.email}</td>
+                    <td class="clickableCell" data-email="${target.email}" >${target.email}</td>
                     `);
                     $("#currentTarget tbody").append(row);
                 })
@@ -209,23 +207,44 @@
                 $("#prevTargets tbody").empty()
                 for (let i = 0; i < player.prevTargets.length; i++) {
                     const element = player.prevTargets[i];
-                    $.get("/adminApi/getPlayer?email=" + element.email).then((docs) => {
-                        target = docs[0];
+                    $.get("/adminApi/getPlayer?email=" + element.email).then((target) => {
                         var row = $('<tr />');
                         row.append(`                    
                         <td>${target.name}</td>
                         <td>${target.class}</td>
-                        <td class="col" data-email="${target.email}" >${target.email}</td>
+                        <td class="clickableCell" data-email="${target.email}" >${target.email}</td>
                         <td>${new Date(target.deathTime).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" })}</td>
                         <td>${target.placement}</td>
                         `);
                         $("#prevTargets tbody").prepend(row);
                     })
-                }                
+                }         
+
+                // Show logs
+                $("#log tbody").empty()
+                for (let i = 0; i < player.log.length; i++) {
+                    const element = player.log[i];
+                    var row = $('<tr />');
+                    row.append(`                    
+                    <td>${element.name}</td>
+                    <td>${element.class}</td>
+                    <td>${new Date(element.time).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" })}</td>
+                    <td>${element.success}</td>
+                    `);
+                    $("#log tbody").prepend(row);
+                }    
             })
         }
 
-        $(document).on("click", ".col", function() {
+        function kill() { // Kill a player
+            let email = $('#killButton').data("email");
+            if(!confirm("Vill du döda spelaren?")) return false;
+            let push = confirm("Vill du döda spelaren naturligt? Dvs. att spelaren räknas till de spelare andra har eliminerat.\nTryck OK för Ja och Cancel för Nej")
+            $.get(`/adminApi/killPlayer?email=${email}&push=${push}`)
+            window.location.reload();
+        }
+
+        $(document).on("click", ".clickableCell", function() { // Bind click on all clickable cells to select player
             selPlayer($( this ).data("email"))
         });
 
