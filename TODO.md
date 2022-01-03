@@ -36,8 +36,3 @@ I övrigt  kolla igenom, refactora, kommentera, detta ska visas upp för någon 
 På tal om det kolla igenom error hantering, försök få det lätt att följa.
 
 Skapa också en guide för hur allt funkar, uppsättning osv. Tanken är att det ska gå att starta utan mig. Det ska vara ett verktyg inte bara för i år utan för framtiden också.
-
-
-
-
-Snygg jobbat! Jobba på, 2022-01-03
