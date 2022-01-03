@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Griffin Games Admin Panel</title>
+    <style>
+        #excel_table {
+            height: 100vh;
+            width: 50vw;
+            overflow: scroll;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+        }
+        table {
+            border-collapse: collapse;
+        }
+
+        table.sortable tbody tr:nth-child(2n) td {
+            background: #ffcccc;
+        }
+        table.sortable tbody tr:nth-child(2n+1) td {
+            background: #ccffff;
+        }
+        .col {
+            cursor: pointer;
+        }
+
+        #selected_user {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 40vw;
+            height: 90vh;
+            background-color: lightgray;
+            border-radius: 10px;
+            overflow: scroll;
+        }
+
+        #sel_user_table {
+            position: relative;
+            top: 20px;
+            left: 10px;
+            font-size: 15pt;
+        }
+
+        #currentTarget {
+            position: relative;
+            top: 40px;
+            left: 10px;
+            font-size: 15pt;
+        }
+
+        #prevTargets {
+            position: relative;
+            top: 60px;
+            left: 10px;
+            font-size: 15pt;
+        }
+        #logg {
+            position: relative;
+            top: 150px;
+            left: 10px;
+            font-size: 15pt;
+        }
+
+        #actions {
+            position: relative;
+            left: 10px;
+            top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="excel_table"></div>
+    <div id="selected_user">
+        <div id="actions">
+            <button>Döda</button>
+        </div>
+        <table id="sel_user_table">
+            <tr>
+                <th>Namn:</th>
+                <td id="selUserName"></td>
+            </tr>
+            <tr>
+                <th>Klass:</th>
+                <td id="selUserClass"></td>
+            </tr>
+            <tr>
+                <th>Epost:</th>
+                <td id="selUserEmail"></td>
+            </tr>
+            <tr>
+                <th>Tid för död:</th>
+                <td id="selUserAlive"></td>
+            </tr>
+            <tr>
+                <th>Placering:</th>
+                <td id="selUserPlace"></td>
+            </tr>
+        </table>
+        <table id="currentTarget">
+            <caption>Nuvarande target</caption>
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Klass</th>
+                    <th>Epost</th>
+                </tr>
+            </thead>
+            <tbody \>
+        </table>
+        <table id="prevTargets">
+            <caption>Tidigare elimineringar</caption>
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Klass</th>
+                    <th>Epost</th>
+                    <th>Tid</th>
+                    <th>Placering</th>
+                </tr>
+            </thead>
+            <tbody \>
+        </table>
+        <table id="logg">
+            <caption>Logging av rapporteringar</caption>
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Klass</th>
+                    <th>Tid</th>
+                    <th>Lyckad</th>
+                </tr>
+            </thead>
+            <tbody \>
+        </table>
+    </div>
+
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function parseDate(time) {
+
+        }
+
+        $.get("/adminApi/data").then((data) => {
+            var table = $(`
+            <table class="sortable">
+                <tr>
+                    <th>Namn</th>
+                    <th>Klass</th>
+                    <th>Epost</th>
+                    <th>Target</th>
+                    <th>Alive</th>
+                    <th>Death Time</th>
+                    <th>Placement</th>
+                </tr>
+            </table
+            `);
+
+            for(var y in data) {
+                let player = data [y]
+                var row = $('<tr />');
+                for(var x in player) {
+                    if(x == "_id" || x == "prevTargets" ) continue; //Do not display ID nor prevTargets
+                    if(x == "deathTime") row.append(`<td class="col" data-email="${player.email}">${new Date(player[x]).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" })}</td>`);
+                    else row.append(`<td class="col" style="background-color: ${(x == "alive"?(player[x]==false?"red":"darkgreen"):"")}" data-email="${(x=="target"?player.target:player.email)}">${player[x]}</td>`);
+                }
+                table.append(row);
+            }
+
+            // Insert into DOM
+            $('#excel_table').html(table);
+            sorttable.makeSortable($(".sortable")[0]);
+        })
+
+        function selPlayer(email) {
+            $.get("/adminApi/getPlayer?email=" + email).then((docs) => {
+                player = docs[0]
+                console.log(player)
+
+                // Show user data
+                $("#selUserName").text(player.name)
+                $("#selUserClass").text(player.class)
+                $("#selUserEmail").text(player.email)
+                $("#selUserAlive").text(player.alive?"Levande":player.deathTime)
+                $("#selUserPlace").text(player.alive?"null":player.placement)
+
+                // Show current target
+                $.get("/adminApi/getPlayer?email=" + player.target).then((docs) => {
+                    target = docs[0];
+                    $("#currentTarget tbody").empty()
+                    var row = $('<tr />');
+                    row.append(`                    
+                    <td>${target.name}</td>
+                    <td>${target.class}</td>
+                    <td class="col" data-email="${target.email}" >${target.email}</td>
+                    `);
+                    $("#currentTarget tbody").append(row);
+                })
+
+                // Show previous target
+                $("#prevTargets tbody").empty()
+                for (let i = 0; i < player.prevTargets.length; i++) {
+                    const element = player.prevTargets[i];
+                    $.get("/adminApi/getPlayer?email=" + element.email).then((docs) => {
+                        target = docs[0];
+                        var row = $('<tr />');
+                        row.append(`                    
+                        <td>${target.name}</td>
+                        <td>${target.class}</td>
+                        <td class="col" data-email="${target.email}" >${target.email}</td>
+                        <td>${new Date(target.deathTime).toLocaleString(undefined, { dateStyle:"short", timeStyle: "short" })}</td>
+                        <td>${target.placement}</td>
+                        `);
+                        $("#prevTargets tbody").prepend(row);
+                    })
+                }                
+            })
+        }
+
+        $(document).on("click", ".col", function() {
+            selPlayer($( this ).data("email"))
+        });
+
+    </script>
+
+</body>
+</html>

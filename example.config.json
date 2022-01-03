@@ -10,6 +10,8 @@
     "redirectUri": "Auth redirect uri",
     "cookieDomain": "Cookie Domain",
 
-    "dbConnect": "Mongo DB connect uri"
+    "dbConnect": "Mongo DB connect uri",
+
+    "administratorEmails": ["admin@domain.com", "host@domain.com"]
 }
 

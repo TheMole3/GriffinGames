@@ -53,10 +53,12 @@
 			fetch(`/report?name=${name.value}&class=${klass.value}`)
 			.then(response => response.json())
 			.then(data => {
-				if(data.status = true) { // If we succesfully reported our target update
+				if(data.status == true) { // If we succesfully reported our target update
 					document.getElementById("targetName").innerHTML = data.newTargetName
 					document.getElementById("targetClass").innerHTML = data.newTargetClass
 					name.value = klass.value = ""
+				} else {
+					alert(data.message)
 				}
 			});
 

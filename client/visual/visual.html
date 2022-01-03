@@ -49,14 +49,15 @@
             alive = 0
             for (let index = 0; index < names.length; index++) {
                 const element = names[index];
-                if(!element.alive) document.getElementsByName(element.id)[0].className = "dead"
-                else document.getElementsByName(element.id)[0].className = "", alive++
+                if(!element.alive) document.getElementsByName(element._id)[0].className = "dead"
+                else document.getElementsByName(element._id)[0].className = "", alive++
             }
 
             setAlive(alive)
         }
 
         function setNewNames(names) {
+            names = names.sort(() => (Math.random() > .5) ? 1 : -1);
             [...document.getElementsByClassName("Col")].forEach(element => {
                 element.innerHTML = ""
             });
@@ -74,8 +75,10 @@
                 document.getElementsByClassName("Col"+i)[0].style["line-height"] = spacing + "vh"
 
                 for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
-                    if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos].id}">` + names[pos].name + "</span><br>"; alive++}
-                    else document.getElementsByClassName("Col"+ i)[0].innerHTML += `<span class="dead" name="${names[pos].id}">` + names[pos].name + "</span><br>"
+                    let splitName = names[pos].name.split(" ")
+                    name = splitName[0] + " " + splitName[splitName.length-1] 
+                    if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos]._id}">` + name + "</span><br>"; alive++}
+                    else document.getElementsByClassName("Col"+ i)[0].innerHTML += `<span class="dead" name="${names[pos]._id}">` + name + "</span><br>"
                 }
 
                 setAlive(alive)

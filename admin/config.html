@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Griffin Games Config</title>
+</head>
+<body>
+
+    <p>Klistra in Exceldata här. Kolumnerna ska vara Namn, Klass, Epost</p>  
+    <textarea name="excel_data" style="width:250px;height:150px;"></textarea><br>
+    <input type="button" onclick="javascript:generateTable()" value="Generera data"/>
+    <br><br>
+        <p>Nedan kommer excel data visas för verifiering, scrolla ner för att skicka in datan!</p>
+    <hr>
+    <div id="excel_table"></div>
+    
+    <input type="button"  id="sendData" style="display: none;" onclick="javascript:sendData()" value="Skicka in data"/>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function generateTable() {
+            var data = $('textarea[name=excel_data]').val();
+            console.log(data);
+            var rows = data.split("\n");
+
+            var table = $('<table />');
+
+            playerArray = [];
+
+            for(var y in rows) {
+                var cells = rows[y].split("\t");
+                var row = $('<tr />');
+                if(!cells[0] && !cells[1] && !cells[2]) continue; // Om raden är tom
+                person = {
+                    name: cells[0],
+                    class: cells[1],
+                    email: cells[2],
+                };
+                for(var x in cells) {
+                    row.append('<td>'+cells[x]+'</td>');
+                }
+                table.append(row);
+                playerArray.push(person)
+            }
+
+            // Insert into DOM
+            $('#excel_table').html(table);
+            console.log(playerArray)
+            $("#sendData").show()
+        }
+
+        function sendData() {
+            if(confirm('Är du säker på att du vill lägga in detta i databasen? Det kommer att skriva över allt gammalt!')) {
+                console.log(playerArray)
+                $.ajax({
+                    type: "POST",
+                    url: "/adminApi/newPlayers",
+                    dataType: "json",
+                    data: { players: playerArray },
+                    success: function (result) {
+                    },
+                    error: function (result){
+                    }
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -53,7 +53,7 @@ var griffin = {
         await griffin.calculatePlayers()
         let placement = griffin.alive
         return new Promise((resolve, reject) => {
-            db.GriffinGames.update({'email': {$regex : new RegExp(email, "i")}}, {$set: {alive: false, target: false, placement: placement}}, {multi: false}, function (error, docs) {
+            db.GriffinGames.update({'email': {$regex : new RegExp(email, "i")}}, {$set: {alive: false, deathTime: Date.now(), target: false, placement: placement}}, {multi: false}, function (error, docs) {
                 if (error) reject(error);
                 resolve(docs);
             })
