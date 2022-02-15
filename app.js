@@ -6,7 +6,7 @@ const config = require("./config.json")
     , ejs = require('ejs')
     , cookieParser = require("cookie-parser")
     , bodyParser = require("body-parser")
-    , https = require('http');
+    , http = require('http');
 
 
 const griffin = require("./griffin.js")
@@ -83,11 +83,7 @@ app.get('/visual', (req, res) => { // Microsoft Azure login endpoint
 
 
 // Start server
-var httpsServer = https.createServer({
-    //ca: fs.readFileSync("ca_bundle.crt"),
-    //cert: fs.readFileSync("certificate.crt"),
-    //key: fs.readFileSync("private.key")
-}, app);
+var httpServer = http.createServer(app);
 
 httpsServer.listen(config.port, () => {
     console.log('HTTPS Server running on port ' + config.port);
