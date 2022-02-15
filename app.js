@@ -84,9 +84,9 @@ app.get('/visual', (req, res) => { // Microsoft Azure login endpoint
 
 // Start server
 var httpsServer = https.createServer({
-    ca: fs.readFileSync("ca_bundle.crt"),
-    cert: fs.readFileSync("certificate.crt"),
-    key: fs.readFileSync("private.key")
+    //ca: fs.readFileSync("ca_bundle.crt"),
+    //cert: fs.readFileSync("certificate.crt"),
+    //key: fs.readFileSync("private.key")
 }, app);
 
 httpsServer.listen(config.port, () => {

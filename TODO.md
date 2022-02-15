@@ -14,6 +14,10 @@ När sätts placeringen? När du säger att du är död eller när den som döda
 
 Visa att du är död bättre
 
+Redirecta till login om man får 403 när man reportar
+
+Trimma inputs från whitespace i början och slutet, ta också ner till max ett space i mitten
+
 RESPONSIVE!!! Det måste den vara
 
 
@@ -36,3 +40,6 @@ I övrigt  kolla igenom, refactora, kommentera, detta ska visas upp för någon 
 På tal om det kolla igenom error hantering, försök få det lätt att följa.
 
 Skapa också en guide för hur allt funkar, uppsättning osv. Tanken är att det ska gå att starta utan mig. Det ska vara ett verktyg inte bara för i år utan för framtiden också.
+
+
+Om du känner dig riktigt vågad, gör om den i react ;), dock kanske det är onödigt, är inte så mycket dynamiskt content på själva sidorna folk kommer använda 

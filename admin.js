@@ -6,7 +6,7 @@ const mongojs = require('mongojs')
 
 let adminServer = (express, app, griffin) => {
     ensureAdminAuth = (req, res, next) => {
-        if(!config.administratorEmails.includes(req.user.email)) return res.send(403); 
+        if(!req.user || !config.administratorEmails.includes(req.user.email)) return res.send(403); 
         next();
     }
 
@@ -48,7 +48,7 @@ let adminServer = (express, app, griffin) => {
         }, {}))
         
         //Randomisera listan med spelare utan att spelare från samma klass hamnar precis efter varandra
-        randomizedPlayerList = [] // Array för spelare
+        let randomizedPlayerList = [] // Array för spelare
         for (let i = 0; i < players.length; i++) { // Loopa lika många gånger som antal spelare
             let bigestArray = 0;
             for (let o = 0; o < grouped.length; o++) { // Loopa genom klasserna för att se vilken som är störst
@@ -60,7 +60,7 @@ let adminServer = (express, app, griffin) => {
         }
     
         // Skapa databasen
-        database = [];
+        let database = [];
         for (let i = 0; i < randomizedPlayerList.length; i++) {
             let player = randomizedPlayerList[i];
             let target = i!=randomizedPlayerList.length-1?randomizedPlayerList[i+1]:randomizedPlayerList[0]

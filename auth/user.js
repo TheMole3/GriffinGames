@@ -5,12 +5,14 @@ const mongojs = require('mongojs')
 
 module.exports = {
     findOrCreate: (data, cb) => { // Find or create a user
+      console.log(data)
       db.users.findAndModify({
         query: { id: data.uniqueId }, // Query for the user ID
         update: {
           $setOnInsert: {
             provider: "microsoft",
             id: data.uniqueId,
+            tenantId: data.tenantId,
             displayName: data.account.name,
             email: data.account.username,
           }
