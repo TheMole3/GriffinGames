@@ -37,17 +37,25 @@ app.get('/portal', async (req, res) => { // Portal page, where the contestants r
 
     var player = await griffin.getPlayer(req.user.email)
     if(!player) return res.send("Du är inte registrerad som spelare, om du tror detta är fel kontakta te20ha3@cng.se")
-    var target = await griffin.getPlayer(player.target)
-    if(!target) target = {name: "Du har ingen som du ska ta"}
 
-    ejs.renderFile(__dirname + "/client/portal/portal.html", { // Render page
-        target: {
-            name: target.name, // Person to kill
-            class: target.class // Class of the person to kill
-        }
-    }, function(err, str){
-        res.send(str)
-    })
+    if(player.alive) { // If player is alive render portal, else render death screen
+        ejs.renderFile(__dirname + "/client/portal/portal.html", { // Render page
+            target: {
+                name: target.name, // Person to kill
+                class: target.class // Class of the person to kill
+            }
+        }, function(err, str){
+            res.send(str)
+        })
+    } else {
+        await griffin.calculatePlayers()
+        ejs.renderFile(__dirname + "/client/dead/dead.html", { // Render page
+            left: griffin.alive,
+            placement: player.placement
+        }, function(err, str){
+            res.send(str)
+        })
+    }
 })
 
 app.get('/report', async (req, res) => {
@@ -85,11 +93,11 @@ app.get('/visual', (req, res) => { // Microsoft Azure login endpoint
 // Start server
 var httpServer = http.createServer(app);
 
-httpsServer.listen(config.port, () => {
+httpServer.listen(config.port, () => {
     console.log('HTTPS Server running on port ' + config.port);
 });
 
-const io = require('socket.io')(httpsServer);
+const io = require('socket.io')(httpServer);
 
 let visualServer = require("./visual.js")(app, io)
 let adminServer = require("./admin.js")(express, app, griffin)

@@ -1,0 +1,76 @@
+@import url('http://fonts.cdnfonts.com/css/rage-italic');
+
+.mediaViewInfo {
+    --web-view-name: Login;
+    --web-view-id: Login;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+}
+:root {
+    --web-view-ids: Login;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    transition: 0.3s;
+}
+
+span {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+#body {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(74,72,72,1);
+    overflow: hidden;
+    --web-view-name: Login;
+    --web-view-id: Login;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+    justify-content: center;
+    text-align: center;
+}
+
+.text {
+    display: flex;
+    filter: drop-shadow(10px 20px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Rockwell;
+    font-style: italic;
+    font-weight: normal;
+    color: rgba(199,199,199,1);
+}
+
+#Griffin_Games {
+    top: 3vh;
+
+    font-family: Rage;
+    font-size: 19vmin;
+    color: rgba(255,255,255,1);
+}
+
+#eliminated {
+    text-align: center;
+    top: 43vh;
+    font-size: 5vmin;
+}
+
+
+#left {
+    top: 65vh;
+    font-size: 5vmin;
+}
