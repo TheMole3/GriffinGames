@@ -2,7 +2,7 @@
 A utility for hosting big living mafia/hitman games, primarily at CNG.
 
 ## How does the game work
-Living mafia, assasins, hitman, or griffin games, in which players try to eliminate one another using mock weapons, in an effort to become the last surviving player.
+Living mafia, assassins, hitman, or griffin games, is a game in which players try to eliminate one another using mock weapons, in an effort to become the last surviving player.
 All players are assigned a target that they should eliminate by touching the person with their mock weapon.
 If a player eliminates its target they are now assigned the target that their target had before.
 
@@ -45,23 +45,23 @@ Copy `example.config.json` to `config.json`
 
 `"azure": {"clientId", "authority", "clientSecret"}`    Contains Microsoft Azure Auth credentials for authenication. You can read how to get these here https://docs.microsoft.com/sv-se/graph/auth/auth-concepts
 
-`"authSecret": "Auth JWT Secret"`                       Choose a long random string to encrypt user data. KEEP THIS SECRET! If it is released, anyone can use anyones account.
+`"authSecret": "Auth JWT Secret"`                       Choose a long random string to encrypt user data. KEEP THIS SECRET! If it is released, anyone can use anyone's account.
 
-`"domain": "domain.example.tld"`                        The base uri of the website
+`"domain": "domain.example.tld"`                        The base URI of the website
 
-`"https:": true`                                        Can be true or false and defines wether to use https or http
+`"https:": true`                                        Can be true or false and defines whether to use https or http
 
 `"dbConnect": "Mongo DB connect uri"`                   A mongodb connect uri, read more here https://docs.mongodb.com/manual/reference/connection-string/
 
 `"administratorEmails": ["admin@domain.com", "host@domain.com"]` An array of emails that should have access to admin and setup pages
 
 ### Running the server
-The webserver is started using `node app.js`
+The web server is started using `node app.js`
 
 
 ## Game setup
 Start by getting data from the people who are going to play the game.
-<br> The data needed are, Name, Email and Class.
+<br> The data needed are Name, Email and Class.
 
 Put this into an Excel document formated like the table below
 | Name                  | Class | Email             |
@@ -73,7 +73,7 @@ Put this into an Excel document formated like the table below
 | Kinborough Cristian   | bo2   | exvxcp@domain.com |
 
 Navigate to your domain and `/config`<br>
-There, paste your excel data into the textarea, *DO NOT COPY TITLES FOR THE COLUMNS! ONLY USER DATA*<br>
+There, paste your excel data into the text area, *DO NOT COPY TITLES FOR THE COLUMNS! ONLY USER DATA*<br>
 Then press "Generera data", verify that the data is correct, and then "Skicka in data".
 
 The server will now generate who will eliminate who.
