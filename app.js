@@ -8,7 +8,8 @@ const config = require('./config.json')
     , ejs = require('ejs')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
-    , http = require('http');
+    , http = require('http')
+    , csrf = require('csurf');
 
 
 const griffin = require('./griffin.js');
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:500
 app.use(express.json()); // Use express JSON
 
 app.use(auth.jwt.authenticateToken); // Use middleware for auth token
+app.use(csrf({ cookie: true }));
 
 app.use('/client', express.static('client')); // Serve static /client
 
