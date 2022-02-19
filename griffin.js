@@ -4,7 +4,8 @@
 const config = require('./config.json');
 
 const mongojs = require('mongojs')
-    , db = mongojs(config.dbConnect, ['GriffinGames']); // Import database
+    , db = mongojs(config.dbConnect, ['GriffinGames']) // Import database
+    , _ = require('lodash');
 
 var griffin = {
 
@@ -29,12 +30,12 @@ var griffin = {
             
             db.GriffinGames.findOne(
                 {
-                    'email': { $regex : new RegExp(email, 'i') }
+                    'email': new RegExp(_.escapeRegExp(email), 'i')
                 }, 
                 function (error, docs) {
                     if (error) reject(error);
                     resolve(docs);
-                }
+                } 
             );
 
         }).catch((error) => console.error(error));
@@ -60,8 +61,8 @@ var griffin = {
 
             db.GriffinGames.findOne(
                 {
-                    'name': { $regex : new RegExp(namn, 'i') }, 
-                    'class': { $regex : new RegExp(klass, 'i') }
+                    'name': { $regex : new RegExp(_.escapeRegExp(namn), 'i') }, 
+                    'class': { $regex : new RegExp(_.escapeRegExp(klass), 'i') }
                 }, 
                 function (error, docs) {
                     if (error) reject(error);
@@ -91,7 +92,7 @@ var griffin = {
 
             db.GriffinGames.findOne(
                 {
-                    'target': {$regex : new RegExp(targetEmail, 'i')}
+                    'target': {$regex : new RegExp(_.escapeRegExp(targetEmail), 'i')}
                 }, 
                 function (error, docs) {
                     if (error) reject(error);
@@ -123,7 +124,7 @@ var griffin = {
         // Log the report for noticing abuse
         db.GriffinGames.update(
             {
-                'email': { $regex : new RegExp(emailPlayer, 'i') }
+                'email': { $regex : new RegExp(_.escapeRegExp(emailPlayer), 'i') }
             }, {
                 $push: {
                     log: {
@@ -174,7 +175,7 @@ var griffin = {
 
             db.GriffinGames.update(
                 {
-                    'email': { $regex : new RegExp(emailPlayer, 'i') }
+                    'email': { $regex : new RegExp(_.escapeRegExp(emailPlayer), 'i') }
                 }, 
                 {
                     $set: {
@@ -214,7 +215,7 @@ var griffin = {
 
             db.GriffinGames.update(
                 {
-                    'email': { $regex : new RegExp(emailPlayer, 'i') }
+                    'email': { $regex : new RegExp(_.escapeRegExp(emailPlayer), 'i') }
                 }, 
                 {
                     $set: {
@@ -252,7 +253,7 @@ var griffin = {
 
             db.GriffinGames.update(
                 {
-                    'email': { $regex : new RegExp(email, 'i') }
+                    'email': { $regex : new RegExp(_.escapeRegExp(email), 'i') }
                 }, 
                 {
                     $set: {
@@ -298,5 +299,10 @@ var griffin = {
 
     }
 };
+
+let a = async () => {
+    console.log(await griffin.getPlayer('tE20ha3@cng.se'));
+};
+a();
 
 module.exports = griffin;
