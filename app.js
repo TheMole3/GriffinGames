@@ -27,6 +27,15 @@ app.use(csrf({ cookie: true }));
 
 app.use('/client', express.static('client')); // Serve static /client
 
+// Rate limiter
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+    windowMs: 1*30*1000, // 30 seconds
+    max: 5
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 // Web endpoints
 app.get('/', async (req, res) => { // Main endpoint, Login page
