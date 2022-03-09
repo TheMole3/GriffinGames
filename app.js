@@ -22,11 +22,6 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 app.use(express.json()); // Use express JSON
 
-app.use(auth.jwt.authenticateToken); // Use middleware for auth token
-app.use(csrf({ cookie: true }));
-
-app.use('/client', express.static('client')); // Serve static /client
-
 // Rate limiter
 var RateLimit = require('express-rate-limit');
 var limiter = new RateLimit({
@@ -36,6 +31,11 @@ var limiter = new RateLimit({
 
 // apply rate limiter to all requests
 app.use(limiter);
+
+app.use(auth.jwt.authenticateToken); // Use middleware for auth token
+app.use(csrf({ cookie: true }));
+
+app.use('/client', express.static('client')); // Serve static /client
 
 // Web endpoints
 app.get('/', async (req, res) => { // Main endpoint, Login page

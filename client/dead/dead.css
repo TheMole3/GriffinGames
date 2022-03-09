@@ -1,4 +1,4 @@
-@import url('http://fonts.cdnfonts.com/css/rage-italic');
+@import url('https://fonts.cdnfonts.com/css/rage-italic');
 
 .mediaViewInfo {
     --web-view-name: Login;
@@ -58,7 +58,7 @@ span {
 #Griffin_Games {
     top: 3vh;
 
-    font-family: Rage;
+    font-family: Rage Italic;
     font-size: 19vmin;
     color: rgba(255,255,255,1);
 }
