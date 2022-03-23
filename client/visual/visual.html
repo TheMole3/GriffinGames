@@ -75,11 +75,11 @@
             var pos = 0
             for(let i = 1; i <= 12; i++) { // For each column
                 var spacing = ((90/3)/inCol)
-                if(i == 12) spacing = (99)/(names.length-(pos+1))
+                if(i == 12) spacing = (90)/(names.length-(pos))
 
                 document.getElementsByClassName("Col"+i)[0].style["line-height"] = spacing + "vh"
 
-                for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
+                for(let il= 0; (il < inCol*columnCount[i-1] || i==12) && pos < names.length; pos++, il++) {
                     let splitName = names[pos].name.split(" ")
                     name = splitName[0] + " " + splitName[splitName.length-1] 
                     if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos]._id}">` + name + "</span><br>"; alive++}
