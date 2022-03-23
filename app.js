@@ -33,7 +33,6 @@ let limiter = RateLimit({
 app.use(limiter);
 
 app.use(auth.jwt.authenticateToken); // Use middleware for auth token
-app.use(csrf({ cookie: true }));
 
 app.use('/client', express.static('client')); // Serve static /client
 
