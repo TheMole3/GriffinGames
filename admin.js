@@ -44,7 +44,7 @@ let adminServer = (express, app, griffin) => {
     app.post('/adminApi/newPlayers', ensureAdminAuth, (req, res) => { // Lägg till nya spelare, tar bort gammla spelare
         let players = req.body.players; // All potential players
         players = players.sort(() => (Math.random() > 0.5) ? 1 : -1); // Shuffle player array
-        let grouped = Object.values(players.reduce((acc, item) => { // Dela upp spelare baserat på klass
+        /*let grouped = Object.values(players.reduce((acc, item) => { // Dela upp spelare baserat på klass
             // lägg till i arrayen baserat på vilken klass
             acc[item.class] = [...(acc[item.class] || []), item];
             return acc;
@@ -62,13 +62,13 @@ let adminServer = (express, app, griffin) => {
             randomizedPlayerList.push((grouped[bigestArray].pop())); // Lägg till en spelare från den klass med flest kvarvarande spelare
 
             grouped = grouped.sort(() => (Math.random() > 0.5) ? 1 : -1);
-        }
+        }*/
     
         // Skapa databasen
         let database = [];
-        for (let i = 0; i < randomizedPlayerList.length; i++) {
-            let player = randomizedPlayerList[i];
-            let target = i!=randomizedPlayerList.length-1?randomizedPlayerList[i+1]:randomizedPlayerList[0];
+        for (let i = 0; i < players.length; i++) {
+            let player = players[i];
+            let target = i!=players.length-1?players[i+1]:players[0];
             database.push({
                 name: player.name,
                 class: player.class,
