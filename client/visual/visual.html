@@ -81,7 +81,6 @@
 
                 for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
                     let splitName = names[pos].name.split(" ")
-		    console.log(splitName);
                     name = splitName[0] + " " + splitName[splitName.length-1] 
                     if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos]._id}">` + name + "</span><br>"; alive++}
                     else document.getElementsByClassName("Col"+ i)[0].innerHTML += `<span class="dead" name="${names[pos]._id}">` + name + "</span><br>"
