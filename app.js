@@ -23,10 +23,10 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:500
 app.use(express.json()); // Use express JSON
 
 // Rate limiter
-var RateLimit = require('express-rate-limit');
-var limiter = new RateLimit({
+let RateLimit = require('express-rate-limit');
+let limiter = RateLimit({
     windowMs: 1*30*1000, // 30 seconds
-    max: 5
+    max: 10
 });
 
 // apply rate limiter to all requests

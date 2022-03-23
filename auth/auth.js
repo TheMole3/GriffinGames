@@ -44,7 +44,7 @@ const configAzure = {
     }
 };
 
-const REDIRECT_URI = config.https?'https://':'http://' + config.domain + '/redirect'; // Azure redirect uri
+const REDIRECT_URI = 'https://' + config.domain + '/redirect'; // Azure redirect uri
 const pca = new msal.ConfidentialClientApplication(configAzure);
 
 var auth = {
