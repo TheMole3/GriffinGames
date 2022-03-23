@@ -24,7 +24,7 @@ app.use(express.json()); // Use express JSON
 let RateLimit = require('express-rate-limit');
 let limiter = RateLimit({
     windowMs: 1*30*1000, // 30 seconds
-    max: 10
+    max: 50
 });
 
 // apply rate limiter to all requests

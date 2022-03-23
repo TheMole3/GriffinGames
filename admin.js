@@ -44,7 +44,7 @@ let adminServer = (express, app, griffin) => {
     app.post('/adminApi/newPlayers', ensureAdminAuth, (req, res) => { // Lägg till nya spelare, tar bort gammla spelare
         let players = req.body.players; // All potential players
         players = players.sort(() => (Math.random() > 0.5) ? 1 : -1); // Shuffle player array
-        const grouped = Object.values(players.reduce((acc, item) => { // Dela upp spelare baserat på klass
+        let grouped = Object.values(players.reduce((acc, item) => { // Dela upp spelare baserat på klass
             // lägg till i arrayen baserat på vilken klass
             acc[item.class] = [...(acc[item.class] || []), item];
             return acc;
@@ -56,10 +56,12 @@ let adminServer = (express, app, griffin) => {
             let bigestArray = 0;
             for (let o = 0; o < grouped.length; o++) { // Loopa genom klasserna för att se vilken som är störst
                 const klass = grouped[o];
-                if(grouped[bigestArray].length < klass.length /*&& (randomizedPlayerList[i-1]?randomizedPlayerList[i-1].class:false) != klass[0].class*/) bigestArray = o;
+                if(grouped[bigestArray].length < klass.length && (randomizedPlayerList[i-1]?randomizedPlayerList[i-1].class:false) != klass[0].class) bigestArray = o;
             }
 
             randomizedPlayerList.push((grouped[bigestArray].pop())); // Lägg till en spelare från den klass med flest kvarvarande spelare
+
+            grouped = grouped.sort(() => (Math.random() > 0.5) ? 1 : -1);
         }
     
         // Skapa databasen
