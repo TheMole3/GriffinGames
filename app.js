@@ -8,9 +8,7 @@ const config = require('./config.json')
     , ejs = require('ejs')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
-    , http = require('http')
-    , csrf = require('csurf');
-
+    , http = require('http');
 
 const griffin = require('./griffin.js');
 
