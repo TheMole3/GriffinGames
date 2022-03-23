@@ -56,7 +56,7 @@ let adminServer = (express, app, griffin) => {
             let bigestArray = 0;
             for (let o = 0; o < grouped.length; o++) { // Loopa genom klasserna för att se vilken som är störst
                 const klass = grouped[o];
-                if(grouped[bigestArray].length < klass.length && (randomizedPlayerList[i-1]?randomizedPlayerList[i-1].class:false) != klass[0].class) bigestArray = o;
+                if(grouped[bigestArray].length < klass.length /*&& (randomizedPlayerList[i-1]?randomizedPlayerList[i-1].class:false) != klass[0].class*/) bigestArray = o;
             }
 
             randomizedPlayerList.push((grouped[bigestArray].pop())); // Lägg till en spelare från den klass med flest kvarvarande spelare
