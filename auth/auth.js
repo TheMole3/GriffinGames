@@ -44,11 +44,11 @@ const configAzure = {
     }
 };
 
-const REDIRECT_URI = config.https?'https://':'http://' + config.domain + ':' + config.port + '/redirect'; // Azure redirect uri
+const REDIRECT_URI = config.https?'https://':'http://' + config.domain + '/redirect'; // Azure redirect uri
 const pca = new msal.ConfidentialClientApplication(configAzure);
 
 var auth = {
-    getConsentLink: (cb) => { // Get login link to microsfot
+    getConsentLink: (cb) => { // Get login link to microsoft
         const authCodeUrlParameters = { // Request user.read permission
             scopes: ['user.read'],
             redirectUri: REDIRECT_URI,

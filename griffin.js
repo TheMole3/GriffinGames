@@ -147,6 +147,12 @@ var griffin = {
             return {status: false, message: 'Det namn och klass du har fyllt i stämmer inte överens med databasen, kontakta Hugo Arnlund om du tror något blivit fel'};
         }
 
+        // If the player has won
+        if(player.email == newTarget.email) 
+        {
+            return {status: false, message: 'Du har vunnit Griffin Games!'};
+        }
+
         await griffin.setNewTarget(player.email, newTarget.email); // Update target for player
         await griffin.killPlayer(target.email); // Kill old target
 
@@ -299,10 +305,5 @@ var griffin = {
 
     }
 };
-
-let a = async () => {
-    console.log(await griffin.getPlayer('tE20ha3@cng.se'));
-};
-a();
 
 module.exports = griffin;
