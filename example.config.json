@@ -7,8 +7,8 @@
     },
 
     "authSecret": "Auth JWT Secret",
-    "redirectUri": "Auth redirect uri",
-    "cookieDomain": "Cookie Domain",
+    "domain": "localhost:3000",
+    "https:": true,
 
     "dbConnect": "Mongo DB connect uri",
 

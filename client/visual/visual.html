@@ -49,8 +49,13 @@
             alive = 0
             for (let index = 0; index < names.length; index++) {
                 const element = names[index];
-                if(!element.alive) document.getElementsByName(element._id)[0].className = "dead"
-                else document.getElementsByName(element._id)[0].className = "", alive++
+                if(!element.alive) {
+                    document.getElementsByName(element._id)[0].className = "dead"
+                }
+                else {
+                    document.getElementsByName(element._id)[0].className = "";
+                    alive++;
+                }
             }
 
             setAlive(alive)
@@ -64,17 +69,17 @@
             
             let alive = 0
 
-            var inCol = Math.ceil(names.length/24)
+            var inCol = Math.round(names.length/24)
 
             var columnCount = [3,3,3,1,1,1,1,1,1,3,3,3]
             var pos = 0
             for(let i = 1; i <= 12; i++) { // For each column
                 var spacing = ((90/3)/inCol)
-                if(i == 12) spacing = 90/(names.length-pos)
+                if(i == 12) spacing = (90)/(names.length-(pos))
 
                 document.getElementsByClassName("Col"+i)[0].style["line-height"] = spacing + "vh"
 
-                for(let il= 0; il < inCol*columnCount[i-1] && pos < names.length; pos++, il++) {
+                for(let il= 0; (il < inCol*columnCount[i-1] || i==12) && pos < names.length; pos++, il++) {
                     let splitName = names[pos].name.split(" ")
                     name = splitName[0] + " " + splitName[splitName.length-1] 
                     if(names[pos].alive) {document.getElementsByClassName("Col" + i)[0].innerHTML += `<span name="${names[pos]._id}">` + name + "</span><br>"; alive++}
@@ -83,7 +88,6 @@
 
                 setAlive(alive)
             } 
-
             document.getElementsByClassName("container")[0].style.opacity = "100%"
         }
 

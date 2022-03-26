@@ -27,7 +27,8 @@ span {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-#Login {
+#body {
+    display: flex;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -37,23 +38,12 @@ span {
     --web-view-id: Login;
     --web-scale-on-resize: true;
     --web-enable-deep-linking: true;
-}
-
-#Griffin {
-    position: absolute;
-    height: 80vh;
-    top: 10vh;
-    right: 5vw;
-}
-
-@media screen and (max-width: 1400px) {
-    #Griffin {
-        opacity: 0;
-        visibility: hidden;
-    }
+    justify-content: center;
+    text-align: center;
 }
 
 .text {
+    display: flex;
     filter: drop-shadow(10px 20px 5px rgba(0, 0, 0, 0.161));
     position: absolute;
     overflow: visible;
@@ -66,7 +56,6 @@ span {
 }
 
 #Griffin_Games {
-    left: 3vw;
     top: 3vh;
 
     font-family: Rage Italic;
@@ -74,54 +63,14 @@ span {
     color: rgba(255,255,255,1);
 }
 
-#Rapportering {
-    left: 4vw;
-    top: 30vh;
-    font-size: 10vmin;
-    font-style: normal;
-}
-
-#left {
-    left: 4vw;
+#eliminated {
+    text-align: center;
     top: 43vh;
     font-size: 5vmin;
 }
 
-.Logga_in_rect {
-    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
-    position: absolute;
-    overflow: visible;
-    width: 407px;
-    height: 120px;
-    left: 25vw;
+
+#left {
     top: 65vh;
-    cursor: pointer;   
-    border-radius: 20px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Rockwell;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 50px;
-    color: rgba(199,199,199,1);
-    text-align: center;
-    line-height: 120px;
-
-    background-color: rgba(126,126,126,1);
-    transition: 0.3s;
-}
-
-.Logga_in_rect:hover {
-    background-color: rgb(110, 110, 110);
-}
-
-#GDPR {
-    position: absolute;
-    color: rgb(124, 124, 124);
-
-    bottom: 0
-}
-
-#GDPR a {
-    color: rgb(124, 124, 124);
+    font-size: 5vmin;
 }

@@ -7,11 +7,18 @@
 	<title>Griffin Games Portal</title>
 	<link rel="stylesheet" href="/client/portal/portal.css">
 	<link rel="stylesheet" media="screen and (max-width: 882px)" href="/client/portal/portalSmall.css">
+	<style>
+		@media screen and (max-width: 1432) {
+			#info {
+				display: none;
+			}
+		}
+	</style>
 </head>
 <body>
 	<div id="Portal">
 		<span id="Griffin_Games" class="noselect text">Griffin Games</span>
-		<span id="Du_ska_mrda" class="noselect text">Du ska ta</span>
+		<span id="Du_ska_mrda" class="noselect text">Du ska eliminera</span>
 
 		<div id="hidden">
 			<div id="hit" class="noselect text">
@@ -22,10 +29,10 @@
 
 		<div id="Report">
 			<label class="text label noselect" for="nextHitName">Namn</label>
-			<input name="Name" id="nextHitName" class="text nextHit" placeholder="Nästa offer">
+			<input name="Name" id="nextHitName" class="text nextHit" required placeholder="Nästa offer">
 			<div class="line"></div>
 			<label class="text label noselect" for="Class">Klass</label>
-			<input name="Class" id="nextHitClass" class="text nextHit" placeholder="" required pattern="((EE(19|20|21))|(IN21)|(INDRI(19|20))|(INPRK(19|20))|(INSVE(19|20))|(TE21(a|b|c|d))|(TEKDES(19|20))|(TEKPRO(19|20))|(TEKV3D(19|20))|(TEKVET(19|20))|(VO(19|20|21))|(Personal))">
+			<input name="Class" id="nextHitClass" class="text nextHit" placeholder="" required pattern="((EE(19|20|21))|(IN21)|(INDRI(19|20))|(INPRK(19|20))|(INSVE(19|20))|(TE21(a|b|c|d))|(TEKDES(19|20))|(TEKPRO(19|20))|(TEKV3D(19|20))|(TEKVET(19|20))|(VO(19|20|21))|(Personal)|(te4))">
 			<div class="line"></div>
 			<button onclick="report()" id="rapportera" class="text">Rapportera</button>
 		</div>
@@ -35,7 +42,7 @@
 			portalen.<br>
 			<br>
 			Här kan du rapportera<br>
-			dina tagningar.<br>
+			dina elimineringar.<br>
 			<br>
 			Fyll i det namn den du<br>
 			tog hade på sin pinne<br>
@@ -50,15 +57,15 @@
 			let name = document.getElementById("nextHitName");
 			let klass = document.getElementById("nextHitClass");
 
-			fetch(`/report?name=${name.value}&class=${klass.value}`)
+			fetch(`/report?name=${name.value.replace(/\s{2,}/g,' ').trim()}&class=${klass.value.replace(/\s{2,}/g,' ').trim()}`)
 			.then(response => response.json())
 			.then(data => {
 				if(data.status == true) { // If we succesfully reported our target update
-					document.getElementById("targetName").innerHTML = data.newTargetName
-					document.getElementById("targetClass").innerHTML = data.newTargetClass
-					name.value = klass.value = ""
+					document.getElementById("targetName").innerHTML = data.newTargetName;
+					document.getElementById("targetClass").innerHTML = data.newTargetClass;
+					name.value = klass.value = "";
 				} else {
-					alert(data.message)
+					alert(data.message);
 				}
 			});
 
