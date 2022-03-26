@@ -167,3 +167,8 @@ body {
 .digits {
     transition: 3s;
 }
+
+.container {
+    opacity: 0;
+    transition: .5s;
+}

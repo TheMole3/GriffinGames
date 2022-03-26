@@ -18,18 +18,18 @@
                 </div>
             </div>
         </div>
-        <div class="Col1 text Col"></div>
-        <div class="Col2 text Col"></div>
-        <div class="Col3 text Col"></div>
-        <div class="Col4 text Col"></div>
-        <div class="Col5 text Col"></div>
-        <div class="Col6 text Col"></div>
-        <div class="Col7 text Col"></div>
-        <div class="Col8 text Col"></div>
-        <div class="Col9 text Col"></div>
-        <div class="Col10 text Col"></div>
-        <div class="Col11 text Col"></div>
-        <div class="Col12 text Col"></div>
+            <div class="Col1 text Col"></div>
+            <div class="Col2 text Col"></div>
+            <div class="Col3 text Col"></div>
+            <div class="Col4 text Col"></div>
+            <div class="Col5 text Col"></div>
+            <div class="Col6 text Col"></div>
+            <div class="Col7 text Col"></div>
+            <div class="Col8 text Col"></div>
+            <div class="Col9 text Col"></div>
+            <div class="Col10 text Col"></div>
+            <div class="Col11 text Col"></div>
+            <div class="Col12 text Col"></div>
 	</div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -83,6 +83,8 @@
 
                 setAlive(alive)
             } 
+
+            document.getElementsByClassName("container")[0].style.opacity = "100%"
         }
 
         function setAlive(num) {
