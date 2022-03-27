@@ -81,7 +81,8 @@ app.get('/report', async (req, res) => {
 app.get('/login', (req, res) => { // Microsoft Azure login endpoint
     auth.auth.getConsentLink((link) => { // Get a microsoft auth consent link
         res.redirect(link); // Redirect user to authenticate at microsoft
-    });
+//	res.send("Login öppnas på måndag")  
+  });
 });
 
 app.get('/redirect', (req, res) => { // Microsoft Azure Auth redirect endpoint
