@@ -49,7 +49,7 @@ app.get('/portal', async (req, res) => { // Portal page, where the contestants r
 
     var player = await griffin.getPlayer(req.user.email);
     if(!player) return res.send('Du är inte registrerad som spelare, om du tror detta är fel kontakta te20ha3@cng.se');
-    var target = await griffin.getPlayer(req.user.target);
+    var target = await griffin.getPlayer(player.target);
 
     if(player.alive) { // If player is alive render portal, else render death screen
         ejs.renderFile(__dirname + '/client/portal/portal.html', { // Render page
