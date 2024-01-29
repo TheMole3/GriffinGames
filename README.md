@@ -1,27 +1,37 @@
 # GriffinGames
-A utility for hosting big living mafia/hitman games, primarily at CNG.
 
-## How does the game work
-Living mafia, assassins, hitman, or griffin games, is a game in which players try to eliminate one another using mock weapons, in an effort to become the last surviving player.
-All players are assigned a target that they should eliminate by touching the person with their mock weapon.
-If a player eliminates its target they are now assigned the target that their target had before.
+GriffinGames is a utility designed for hosting large-scale living mafia or hitman games, primarily at CNG events.
+
+## How the Game Works
+
+Living mafia, assassins, hitman, or griffin games involve players attempting to eliminate each other using simulated weapons, aiming to be the last player standing. Each player is assigned a target whom they must eliminate by "tagging" them with their simulated weapon. Upon successfully eliminating their target, players inherit their target, continuing the cycle until only one player remains.
 
 # Setup
-## Server setup
-Griffin Games is run on a node.js server.
-All commands here are for Linux Ubuntu, some may also work on windows/mac and other distros, but you will have to adapt them to your operating system
 
-### Instalation
-Start by downloading the repo and going into the directory
-```
-$ git clone https://github.com/TheMole3/GriffinGames.git
-$ cd GriffinGames
-```
+## Server Setup
 
-Then run `npm install` to install the required libraries
+GriffinGames runs on a Node.js server. The following commands are tailored for Linux Ubuntu, but they can be adapted for other operating systems like Windows or macOS.
 
-### Config.json
-```
+### Installation
+
+1. Clone the repository and navigate to the directory:
+
+    ```bash
+    $ git clone https://github.com/TheMole3/GriffinGames.git
+    $ cd GriffinGames
+    ```
+
+2. Install the required libraries:
+
+    ```bash
+    $ npm install
+    ```
+
+### Configuration (config.json)
+
+Copy the `example.config.json` file to `config.json` and configure the parameters as follows:
+
+```json
 {
     "port": 80,
     "azure": {
@@ -29,41 +39,35 @@ Then run `npm install` to install the required libraries
         "authority": "Azure client authority",
         "clientSecret": "Azure client secret"
     },
-
     "authSecret": "Auth JWT Secret",
     "domain": "domain.example.tld",
-    "https:": true,
-
+    "https": true,
     "dbConnect": "Mongo DB connect uri",
-
     "administratorEmails": ["admin@domain.com", "host@domain.com"]
 }
 ```
-Copy `example.config.json` to `config.json`
 
-`"port": 80`                                            Defines the port that the webserver runs on
+- `"port": 80`: Defines the port for the web server.
+- `"azure"`: Contains Microsoft Azure Auth credentials for authentication.
+- `"authSecret"`: Secret key for encrypting user data.
+- `"domain"`: Base URI of the website.
+- `"https": true`: Specifies whether to use HTTPS.
+- `"dbConnect"`: MongoDB connection URI.
+- `"administratorEmails"`: Emails with admin access.
 
-`"azure": {"clientId", "authority", "clientSecret"}`    Contains Microsoft Azure Auth credentials for authenication. You can read how to get these here https://docs.microsoft.com/sv-se/graph/auth/auth-concepts
+### Running the Server
 
-`"authSecret": "Auth JWT Secret"`                       Choose a long random string to encrypt user data. KEEP THIS SECRET! If it is released, anyone can use anyone's account.
+Start the web server:
 
-`"domain": "domain.example.tld"`                        The base URI of the website
+```bash
+$ node app.js
+```
 
-`"https:": true`                                        Can be true or false and defines whether to use https or http
+## Game Setup
 
-`"dbConnect": "Mongo DB connect uri"`                   A mongodb connect uri, read more here https://docs.mongodb.com/manual/reference/connection-string/
+1. Collect player data including Name, Email, and Class.
+2. Organize the data into an Excel document with the following format:
 
-`"administratorEmails": ["admin@domain.com", "host@domain.com"]` An array of emails that should have access to admin and setup pages
-
-### Running the server
-The web server is started using `node app.js`
-
-
-## Game setup
-Start by getting data from the people who are going to play the game.
-<br> The data needed are Name, Email and Class.
-
-Put this into an Excel document formated like the table below
 | Name                  | Class | Email             |
 |-----------------------|-------|-------------------|
 | Brokkr Sheldon        | kc2   | oafpys@domain.com |
@@ -72,12 +76,12 @@ Put this into an Excel document formated like the table below
 | Sigeberht Suibne      | eh1   | ylgibm@domain.com |
 | Kinborough Cristian   | bo2   | exvxcp@domain.com |
 
-Navigate to your domain and `/config`<br>
-There, paste your excel data into the text area, *DO NOT COPY TITLES FOR THE COLUMNS! ONLY USER DATA*<br>
-Then press "Generera data", verify that the data is correct, and then "Skicka in data".
+3. Go to your domain followed by `/config`.
+4. Paste the Excel data into the text area (without column titles).
+5. Click "Generate Data" to verify and submit the data.
 
-The server will now generate who will eliminate who.
+The server will then generate the player assignments.
 
-## Game administration
-At `/adminPanel` users who are specified in the administratorEmails array in the config can see who should eliminate who, placement, and logs.
-There you can also force eliminate players.
+## Game Administration
+
+Navigate to `/adminPanel` where administrators can view player assignments, placements, logs, and forcibly eliminate players. Access is restricted to emails specified in the `administratorEmails` array in the config.
