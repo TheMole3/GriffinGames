@@ -139,12 +139,12 @@ var griffin = {
             function (error) { if(error) console.error(error);}
         );
 
-        if(!newTarget) return {status: false, message: 'Det finns ingen spelare med det namnet och klassen, kontakta Hugo Arnlund om du tror något blivit fel'};
+        if(!newTarget) return {status: false, message: 'Det finns ingen spelare med det namnet och klassen, kontakta spelledaren om du tror något blivit fel'};
 
         // If the hit is a false report
         if(target.target != newTarget.email)  
         { 
-            return {status: false, message: 'Det namn och klass du har fyllt i stämmer inte överens med databasen, kontakta Hugo Arnlund om du tror något blivit fel'};
+            return {status: false, message: 'Det namn och klass du har fyllt i stämmer inte överens med databasen, kontakta spelledaren om du tror något blivit fel'};
         }
 
         // If the player has won
